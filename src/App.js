@@ -1,25 +1,27 @@
-import { useEffect, useState } from 'react';
 import './App.css';
+import Home from './Home';
+import Blogs from './Blogs';
+import Contact from './Contact';
+import NoPage from './NoPage';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 function App() {
-    const [quote, setQuote] = useState("");
-
-    async function getQuote() {
-        const response = await fetch('https://dummyjson.com/quotes/random');
-        const data = await response.json();
-        setQuote(data.quote + ' - ' + data.author);
-    }
-
-    useEffect(() => {
-        fetch('https://dummyjson.com/quotes/random')
-       .then(response => response.json())
-       .then(data => setQuote(data.quote + ' - ' + data.author));
-    }, []);
-
   return (
     <div className="App">
-      <h2>{quote}</h2>
-      <button onClick={getQuote}>Generate</button>
+
+      <h1>Menu</h1>
+      <a className="btn btn-primary m-1" href="/">Home</a>
+      <a className="btn btn-primary m-1" href="/blogs">Blogs</a>
+      <a className="btn btn-primary m-1" href="/contact">Contact</a>
+
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home/>} />
+          <Route path="/blogs" element={<Blogs/>} />
+          <Route path="/contact" element={<Contact/>} />
+          <Route path="*" element={<NoPage/>} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
